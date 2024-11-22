@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import CameraComponent from '../common/CameraComponent';
 
 export default function QuizPage() {
   const navigation = useNavigation();
@@ -22,15 +23,13 @@ export default function QuizPage() {
       
       {/* 카메라 영역 */}
       <View style={[styles.cameraSection, { height: videoHeight }]}>
-        <View style={styles.cameraPlaceholder}>
-          <Text style={styles.placeholderText}>카메라 영역</Text>
-        </View>
+        <CameraComponent style={styles.camera} facing="front" />
       </View>
 
       {/* 하단 컨트롤 영역 */}
       <View style={styles.controlSection}>
         <View style={styles.quizContainer}>
-          <Text style={styles.questionText}>문제가 표시될 영역</Text>
+          <Text style={styles.questionText}>예제가 표시될 영역</Text>
         </View>
         
         <TouchableOpacity style={styles.skipButton}>
@@ -75,11 +74,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#000',
     width: '100%',
   },
-  cameraPlaceholder: {
+  camera: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#333',
+    width: '100%',
   },
   controlSection: {
     backgroundColor: '#fff',
