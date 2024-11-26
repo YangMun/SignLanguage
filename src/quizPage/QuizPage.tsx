@@ -1,14 +1,14 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import CameraComponent from '../common/CameraComponent';
+import CameraView from '../common/CameraView';
 
 export default function QuizPage() {
   const navigation = useNavigation();
   const screenWidth = Dimensions.get('window').width;
   const aspectRatio = 4/3;
   const videoHeight = screenWidth * aspectRatio;
-
+  
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -22,9 +22,7 @@ export default function QuizPage() {
       </View>
       
       {/* 카메라 영역 */}
-      <View style={[styles.cameraSection, { height: videoHeight }]}>
-        <CameraComponent style={styles.camera} facing="front" />
-      </View>
+      <CameraView style={[styles.cameraSection, { height: videoHeight }]} />
 
       {/* 하단 컨트롤 영역 */}
       <View style={styles.controlSection}>
@@ -72,10 +70,6 @@ const styles = StyleSheet.create({
   },
   cameraSection: {
     backgroundColor: '#000',
-    width: '100%',
-  },
-  camera: {
-    flex: 1,
     width: '100%',
   },
   controlSection: {
