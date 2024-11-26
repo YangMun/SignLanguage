@@ -1,49 +1,37 @@
-import React, { useState } from 'react';
-import { StyleSheet, View, Text, Button, TouchableOpacity } from 'react-native';
-import { CameraView, CameraType, useCameraPermissions } from 'expo-camera';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, View, Text } from 'react-native';
+import { Camera, CameraView } from 'expo-camera';
 
 interface CameraComponentProps {
   style?: object;
-  facing?: CameraType;
+  facing?: 'front' | 'back';
 }
 
 export default function CameraComponent({ 
   style, 
   facing = 'front'
 }: CameraComponentProps) {
-  const [permission, requestPermission] = useCameraPermissions();
-  const [currentFacing, setCurrentFacing] = useState<CameraType>(facing);
+  const [hasPermission, setHasPermission] = useState<boolean | null>(null);
 
-  if (!permission) {
-    // 카메라 권한 요청 중
+  useEffect(() => {
+    (async () => {
+      const { status } = await Camera.requestCameraPermissionsAsync();
+      setHasPermission(status === 'granted');
+    })();
+  }, []);
+
+  if (hasPermission === null) {
     return <View style={styles.container}><Text>카메라 권한 요청 중...</Text></View>;
   }
-
-  if (!permission.granted) {
-    // 카메라 접근 권한이 없습니다.
-    return (
-      <View style={styles.container}>
-        <Text>카메라 접근 권한이 없습니다.</Text>
-        <Button onPress={requestPermission} title="권한 요청" />
-      </View>
-    );
-  }
-
-  function toggleCameraFacing() {
-    setCurrentFacing(current => (current === 'back' ? 'front' : 'back'));
+  if (hasPermission === false) {
+    return <View style={styles.container}><Text>카메라 접근 권한이 없습니다.</Text></View>;
   }
 
   return (
     <CameraView
       style={[styles.camera, style]}
-      facing={currentFacing}
-    >
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={toggleCameraFacing}>
-          <Text style={styles.text}>카메라 전환</Text>
-        </TouchableOpacity>
-      </View>
-    </CameraView>
+      facing={facing}
+    />
   );
 }
 
@@ -55,21 +43,5 @@ const styles = StyleSheet.create({
   },
   camera: {
     flex: 1,
-  },
-  buttonContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    backgroundColor: 'transparent',
-    margin: 64,
-  },
-  button: {
-    flex: 1,
-    alignSelf: 'flex-end',
-    alignItems: 'center',
-  },
-  text: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: 'white',
   },
 });

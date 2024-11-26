@@ -23,7 +23,7 @@ export default function QuizPage() {
       
       {/* 카메라 영역 */}
       <View style={[styles.cameraSection, { height: videoHeight }]}>
-        <CameraComponent style={styles.camera} />
+        <CameraComponent style={styles.camera} facing="front" />
       </View>
 
       {/* 하단 컨트롤 영역 */}
