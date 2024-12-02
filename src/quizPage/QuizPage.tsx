@@ -27,7 +27,17 @@ export default function QuizPage() {
       {/* 하단 컨트롤 영역 */}
       <View style={styles.controlSection}>
         <View style={styles.quizContainer}>
+          <Text style={styles.questionLabel}>문제</Text>
           <Text style={styles.questionText}>예제가 표시될 영역</Text>
+        </View>
+        
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.actionButton}>
+            <Text style={styles.actionButtonText}>다시 찍기</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.actionButton, styles.primaryButton]}>
+            <Text style={styles.actionButtonText}>제출하기</Text>
+          </TouchableOpacity>
         </View>
         
         <TouchableOpacity style={styles.skipButton}>
@@ -74,35 +84,57 @@ const styles = StyleSheet.create({
   },
   controlSection: {
     backgroundColor: '#fff',
-    padding: 15,
-    paddingBottom: 25,
+    padding: 20,
+    paddingBottom: 30,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    elevation: 5,
   },
   quizContainer: {
     backgroundColor: '#f5f5f5',
     borderRadius: 15,
-    padding: 15,
-    marginBottom: 10,
-    alignItems: 'center',
+    padding: 20,
+    marginBottom: 15,
+  },
+  questionLabel: {
+    fontSize: 14,
+    color: '#666',
+    marginBottom: 8,
   },
   questionText: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
     color: '#333',
   },
-  skipButton: {
-    backgroundColor: '#4A90E2',
-    padding: 12,
-    borderRadius: 10,
-    alignItems: 'center',
-    marginTop: 5,
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 15,
+    gap: 10,
   },
-  skipButtonText: {
+  actionButton: {
+    flex: 1,
+    backgroundColor: '#E8E8E8',
+    padding: 15,
+    borderRadius: 12,
+    alignItems: 'center',
+  },
+  primaryButton: {
+    backgroundColor: '#4A90E2',
+  },
+  actionButtonText: {
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
   },
-  placeholderText: {
-    color: '#fff',
-    fontSize: 16,
+  skipButton: {
+    backgroundColor: '#F0F0F0',
+    padding: 12,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  skipButtonText: {
+    color: '#666',
+    fontSize: 14,
   },
 });
